@@ -26,7 +26,6 @@ public class PlayerInteractor : MonoBehaviour
     {
         IInteractable target = GetTarget();
         if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
-              Debug.Log("E pressed | nearby=" + nearby.Count + " | target=" + (target != null));
 
         if (interactPrompt != null)
             interactPrompt.SetActive(target != null);
@@ -56,7 +55,6 @@ public class PlayerInteractor : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         IInteractable interactable = other.GetComponentInParent<IInteractable>();
-        Debug.Log("Trigger enter: " + other.name + " | interactable=" + (interactable != null));
 
         if (interactable != null && !nearby.Contains(interactable))
             nearby.Add(interactable);

@@ -1972,7 +1972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7498389299569cf4c8f5b43818959062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuizCube
-  question: {fileID: 11400000, guid: 0fd47d34635375c41a1b3e6eab4c817c, type: 2}
+  question: {fileID: 11400000, guid: 302a30c7f1ef5604387105b2f5b1c9fd, type: 2}
   quizUI: {fileID: 1125476420}
   startState: 1
 --- !u!95 &351294738
@@ -6645,12 +6645,12 @@ MonoBehaviour:
   - cube: {fileID: 1368546557}
     barrier: {fileID: 1887645555}
   - cube: {fileID: 1253875928}
-    barrier: {fileID: 1887645555}
+    barrier: {fileID: 795600903}
   - cube: {fileID: 874350579}
-    barrier: {fileID: 1887645555}
+    barrier: {fileID: 1770385013}
   quizUI: {fileID: 1125476420}
   scoreText: {fileID: 55112669}
-  maxWrongAnswers: 3
+  maxWrongAnswers: 1
 --- !u!4 &1800663589
 Transform:
   m_ObjectHideFlags: 0
@@ -6829,6 +6829,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1918010163}
+  - component: {fileID: 1918010164}
   m_Layer: 0
   m_Name: MAP
   m_TagString: Untagged
@@ -6875,6 +6876,20 @@ Transform:
   - {fileID: 197527503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1918010164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918010162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1dbecc65770d34ab5ca35c54b5bd94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DistanceCulling
+  targetCamera: {fileID: 330585545}
+  maxDistance: 50
 --- !u!43 &1939934012
 Mesh:
   m_ObjectHideFlags: 0

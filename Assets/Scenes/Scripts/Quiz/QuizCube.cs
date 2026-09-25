@@ -13,11 +13,13 @@ public class QuizCube : MonoBehaviour, IInteractable
     [SerializeField] private QuestionData question;
     [SerializeField] private QuizUI quizUI;
 
-    [SerializeField] private CubeState startState = CubeState.Locked;
+    [SerializeField] private CubeState startState =
+        CubeState.Locked;
 
     public CubeState State { get; private set; }
 
-    public bool CanInteract => State == CubeState.Unlocked;
+    public bool CanInteract =>
+        State == CubeState.Unlocked;
 
     public event Action<QuizCube> OnSolved;
 
@@ -28,12 +30,14 @@ public class QuizCube : MonoBehaviour, IInteractable
 
     public void Unlock()
     {
-        if (State == CubeState.Locked)
-        {
-            State = CubeState.Unlocked;
+        if (State != CubeState.Locked)
+            return;
 
-            Debug.Log($"{gameObject.name} unlocked");
-        }
+        State = CubeState.Unlocked;
+
+        Debug.Log(
+            $"{gameObject.name} → UNLOCKED"
+        );
     }
 
     public void Interact()
@@ -41,7 +45,19 @@ public class QuizCube : MonoBehaviour, IInteractable
         if (!CanInteract)
             return;
 
-        quizUI.Show(question, HandleAnswer);
+        if (quizUI == null)
+        {
+            Debug.LogError(
+                $"{gameObject.name}: QuizUI is missing!"
+            );
+
+            return;
+        }
+
+        quizUI.Show(
+            question,
+            HandleAnswer
+        );
     }
 
     private void HandleAnswer(bool correct)
@@ -49,10 +65,11 @@ public class QuizCube : MonoBehaviour, IInteractable
         if (!correct)
             return;
 
-        // السؤال انحل
         State = CubeState.Solved;
 
-        Debug.Log($"{gameObject.name} solved!");
+        Debug.Log(
+            $"{gameObject.name} SOLVED"
+        );
 
         OnSolved?.Invoke(this);
     }
@@ -61,6 +78,8 @@ public class QuizCube : MonoBehaviour, IInteractable
     {
         State = CubeState.Locked;
 
-        Debug.Log($"{gameObject.name} reset");
+        Debug.Log(
+            $"{gameObject.name} RESET"
+        );
     }
 }

@@ -10,13 +10,16 @@ public class QuizUI : MonoBehaviour
     [SerializeField] private TMP_Text questionText;
     [SerializeField] private TMP_Text feedbackText;
     [SerializeField] private Button[] answerButtons;
+
+    [Header("Timing")]
     [SerializeField] private float closeDelay = 1f;
+    [SerializeField] private float loseDelay = 1.5f;
 
     public bool IsOpen { get; private set; }
 
     public event Action Opened;
     public event Action Closed;
-
+    
     public event Action<bool> Answered;
 
     private void Start()
@@ -26,7 +29,8 @@ public class QuizUI : MonoBehaviour
 
     public void Show(QuestionData question, Action<bool> onAnswered)
     {
-        if (IsOpen) return;
+        if (IsOpen)
+            return;
 
         IsOpen = true;
 
@@ -35,9 +39,19 @@ public class QuizUI : MonoBehaviour
         feedbackText.text = "";
         questionText.text = question.questionText;
 
+        SetupButtons(question, onAnswered);
+
+        Opened?.Invoke();
+    }
+
+    private void SetupButtons(
+        QuestionData question,
+        Action<bool> onAnswered)
+    {
         for (int i = 0; i < answerButtons.Length; i++)
         {
             Button btn = answerButtons[i];
+
             btn.onClick.RemoveAllListeners();
 
             bool hasAnswer = i < question.answers.Length;
@@ -49,7 +63,8 @@ public class QuizUI : MonoBehaviour
 
             btn.interactable = true;
 
-            TMP_Text buttonText = btn.GetComponentInChildren<TMP_Text>();
+            TMP_Text buttonText =
+                btn.GetComponentInChildren<TMP_Text>();
 
             if (buttonText != null)
                 buttonText.text = question.answers[i];
@@ -57,11 +72,14 @@ public class QuizUI : MonoBehaviour
             int index = i;
 
             btn.onClick.AddListener(() =>
-                OnAnswerClicked(index, question, onAnswered)
-            );
+            {
+                OnAnswerClicked(
+                    index,
+                    question,
+                    onAnswered
+                );
+            });
         }
-
-        Opened?.Invoke();
     }
 
     private void OnAnswerClicked(
@@ -69,19 +87,21 @@ public class QuizUI : MonoBehaviour
         QuestionData question,
         Action<bool> onAnswered)
     {
-        Debug.Log("Answer clicked: " + index);
+        if (!IsOpen)
+            return;
 
         bool correct = index == question.correctIndex;
 
-        // أخبر QuizCube
+        Debug.Log(
+            $"Answer: {index} | Correct: {correct}"
+        );
+        
         onAnswered?.Invoke(correct);
-
-        // أخبر QuizProgressionManager
         Answered?.Invoke(correct);
 
         if (correct)
         {
-            feedbackText.text = "إجابة صحيحة!";
+            feedbackText.text = "ﻞﻄﺒﻟﺍ ﺎﻬﻳﺍ ﺖﻨﺴﺣﺍ!";
 
             SetButtonsInteractable(false);
 
@@ -89,17 +109,40 @@ public class QuizUI : MonoBehaviour
         }
         else
         {
-            feedbackText.text = "إجابة خاطئة، جرب مرة ثانية";
-
-            // فقط الجواب الغلط يتعطل
+            
             answerButtons[index].interactable = false;
         }
+    }
+    
+    public void ShowLose()
+    {
+        if (!IsOpen)
+            return;
+
+        StopAllCoroutines();
+        
+
+        SetButtonsInteractable(false);
+
+        StartCoroutine(LoseSequence());
+    }
+
+    private IEnumerator LoseSequence()
+    {
+        yield return new WaitForSecondsRealtime(loseDelay);
+
+        Close();
+    }
+
+    private IEnumerator CloseAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(closeDelay);
+
+        Close();
     }
 
     public void Close()
     {
-        Debug.Log("QUIZ CLOSE CALLED");
-
         if (!IsOpen)
             return;
 
@@ -109,14 +152,9 @@ public class QuizUI : MonoBehaviour
 
         IsOpen = false;
 
+        feedbackText.text = "";
+
         Closed?.Invoke();
-    }
-
-    private IEnumerator CloseAfterDelay()
-    {
-        yield return new WaitForSecondsRealtime(closeDelay);
-
-        Close();
     }
 
     private void SetButtonsInteractable(bool value)
