@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45306b290e468ab42add5387b6206e8f, type: 3}
+  m_Name: Q15
+  m_EditorClassIdentifier: Assembly-CSharp::QuestionData
+  questionText: "\u061F\uFEE5\uFEEE\uFE91\uFEAE\uFEDC\uFEDF\uFE8D \uFEAA\uFEF4\uFEB4\uFEDB\uFE83 \uFEF2\uFEE7\uFE8E\uFE9B \uFE9D\uFEAE\uFEA8\uFEF3\uFEED \uFEE2\uFEB4\uFEA0\uFEDF\uFE8D \uFEF0\uFEDF\uFE87 \uFEE6\uFEF4\uFEA0\uFEB4\uFEDB\uFEF7\uFE8D \uFEDE\uFEA7\uFEA9\u064F\uFEF3 \uFEAF\uFE8E\uFEEC\uFE9F \uFEF1\uFE83"
+  answers:
+  - "\uFEF2\uFE92\uFEBC\uFECC\uFEDF\uFE8D"
+  - "\uFEF1\uFEAD\uFEED\uFEAA\uFEDF\uFE8D"
+  - "\uFEF2\uFEB4\uFED4\uFEE8\uFE98\uFEDF\uFE8D"
+  - "\uFEF2\uFEE4\uFEC0\uFEEC\uFEDF\uFE8D"
+  correctIndex: 2

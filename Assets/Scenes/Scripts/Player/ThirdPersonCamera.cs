@@ -34,14 +34,16 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = true;
+
+        /*Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;*/
     }
 
     private void Update()
     {
         HandleCursorToggle();
-    //   ReadMouseInput();
+       ReadMouseInput();
     }
 
     private void LateUpdate()
@@ -68,7 +70,7 @@ public class ThirdPersonCamera : MonoBehaviour
         }
     }
 
- /*   private void ReadMouseInput()
+  private void ReadMouseInput()
     {
         var mouse = Mouse.current;
         if (mouse == null) return;
@@ -77,8 +79,8 @@ public class ThirdPersonCamera : MonoBehaviour
         
         _yaw += delta.x * mouseSensitivity * 0.01f;
         _pitch -= delta.y * mouseSensitivity * 0.01f;
-        _pitch = Mathf.Clamp(_pitch, minPitch, maxPitch);
-    }*/
+        _pitch = Mathf.Clamp(_pitch, 0, 0);
+    }
     
     private void PositionCameraWithCollision(Vector3 pivot)
     {

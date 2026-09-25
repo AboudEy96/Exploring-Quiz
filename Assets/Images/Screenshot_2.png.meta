@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7658459878d8cd54fbbd95d355f5a2b7
+guid: 84f2570b85e37df419b210c4c4e39853
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2165424790217192593
-    second: moe-sticky_0
+      213: 7409734594118988166
+    second: Screenshot_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -128,13 +128,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: moe-sticky_0
+      name: Screenshot_2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 3275
-        height: 1195
+        width: 1919
+        height: 940
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,8 +143,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f6b874f40add2f1e0800000000000000
-      internalID: -2165424790217192593
+      spriteID: 681b26ada5aa4d660800000000000000
+      internalID: 7409734594118988166
       vertices: []
       indices: 
       edges: []

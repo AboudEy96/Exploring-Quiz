@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,6 +30,15 @@ public class QuizProgressionManager : MonoBehaviour
     [Header("Quiz Rules")]
     [SerializeField] private int maxWrongAnswers = 3;
 
+    [Header("Leaderboard")]
+    [SerializeField] private TMP_Text winResultText;
+
+    [Header("Sound Effects")] [SerializeField]
+    private AudioListener[] audioListeners;
+
+    [Header("Player Animator Controller")] [SerializeField]
+    private Animator anim;
+    
     private int currentScore;
     private int wrongAnswers;
 
@@ -80,7 +90,7 @@ public class QuizProgressionManager : MonoBehaviour
 
     private void HandleAnswer(bool correct)
     {
-        string[] support = { "!ﺖﻨﺴﺣﺍ", "ﻊﺋﺍﺭ ﺖﻧﺍ!","!ﻞﻫﺬﻣ", "!ﻞﻄﺑ", "ًَﺍﺪﺟ ﻲﻛﺫ!", "!ﺮﻤﺘﺳﺍ" };
+        string[] support = { "!ﺖﻨﺴﺣﺍ", "ﻊﺋﺍﺭ ﺖﻧﺍ!","!ﻞﻫﺬﻣ", "!ﻞﻄﺑ", "ًَﺍﺪﺟ ﻲﻛﺫ!", "!ﺮﻤﺘﺳﺍ" };
         if (correct)
         {
             int range = Random.Range(0, support.Length-1);
@@ -101,15 +111,23 @@ public class QuizProgressionManager : MonoBehaviour
         }
     }
 
+    IEnumerator HappyAnimation()
+    {
+        yield return new WaitForSeconds(1f);
+        anim.SetBool("Answered", true);
+        yield return new WaitForSeconds(2f);
+        anim.SetBool("Answered", false);
+
+    }
     private void Advance(int index)
     {
         if (wrongAnswers >= maxWrongAnswers)
             return;
 
         currentScore++;
-
+        StartCoroutine(HappyAnimation());
         UpdateScoreUI();
-
+        audioListeners[0].enabled = true;
         Step step = steps[index];
         
         if (step.barrier != null)
@@ -147,7 +165,20 @@ public class QuizProgressionManager : MonoBehaviour
             scoreText.text =
                 $"ﻚﺘﻣﻼﻋ: {currentScore} / {steps.Count}";
         }
-        
+
+        int percentage = steps.Count > 0
+            ? Mathf.RoundToInt((float)currentScore / steps.Count * 100)
+            : 0;
+
+        string playerName = PlayerNameManager.Instance != null
+            ? PlayerNameManager.Instance.CurrentPlayerName
+            : "";
+
+        if (winResultText != null)
+            winResultText.text = $"{playerName} {percentage}";
+
+        if (PlayerNameManager.Instance != null)
+            PlayerNameManager.Instance.SaveScore(percentage);
 
         OnAllSolved?.Invoke();
     }
