@@ -181,8 +181,14 @@ public class QuizProgressionManager : MonoBehaviour
             PlayerNameManager.Instance.SaveScore(percentage);
 
         OnAllSolved?.Invoke();
+        StartCoroutine("HidePanel", 4f);
     }
 
+    public void HidePanel()
+    {
+        WinPanel.SetActive(false);
+    }
+ 
     private void LoseQuiz()
     {
         alertText.text = "<color=#FF0000>ًﺍﺩﺪﺠﻣ ﻝﻭﺎﺣ ﺕﺮﺴﺧ ﺪﻘﻟ!</color>";
