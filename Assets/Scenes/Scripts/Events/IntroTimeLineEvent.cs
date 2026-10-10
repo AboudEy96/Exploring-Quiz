@@ -10,7 +10,7 @@ public class IntroTimeLineEvent : MonoBehaviour
     IEnumerator Start()
     {
         IntroPanel = this.gameObject;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(10);
         DisableIntroPanel();
     }
 
